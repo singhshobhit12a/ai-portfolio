@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio — Shobhit Singh
 
-## Getting Started
+Personal portfolio site for an AI Engineer: production LLM/RAG work, projects, and experience. Built with **Next.js** (static export), **React**, **Tailwind CSS**, and **Framer Motion**.
 
-First, run the development server:
+## Prerequisites
+
+- Node.js **20+**
+- npm
+
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+Static files are written to the `out/` directory. This repo uses `output: "export"` so there is no Node server — suitable for **GitHub Pages**, Netlify, Cloudflare Pages, etc.
 
-To learn more about Next.js, take a look at the following resources:
+## Customize content
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Edit **[`lib/site.config.ts`](lib/site.config.ts)**:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **`siteUrl`** — live site URL for Open Graph (default: `https://singhshobhit12a.github.io/ai-portfolio`).
+- **`githubUrl`** — your GitHub profile URL.
+- Name, taglines, projects, experience, skills, and certifications are all defined there.
 
-## Deploy on Vercel
+## Deploy on GitHub Pages (free)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Configured for repo **`ai-portfolio`** → **`https://singhshobhit12a.github.io/ai-portfolio`**. Change **`GITHUB_PAGES_REPO`** and **`siteUrl`** in [`lib/site.config.ts`](lib/site.config.ts) if your username or repo name differs (`next.config.ts` imports the repo name from there).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Production builds use `basePath` **`/ai-portfolio`** so assets load correctly under the project URL; **`npm run dev`** still serves at **`http://localhost:3000`**.
+
+### Option A — GitHub Actions (recommended)
+
+1. Create GitHub repo **`ai-portfolio`** and push **`main`**.
+2. **Settings → Pages** → **Source**: **GitHub Actions**.
+3. Workflow [.github/workflows/deploy.yml](.github/workflows/deploy.yml) runs on push to **`main`** and publishes **`out/`**. Approve the **github-pages** environment if prompted.
+4. Live at **`https://<username>.github.io/ai-portfolio`**.
+
+### Option B — Branch `main`, folder root (manual upload)
+
+1. **`npm run build`**
+2. Copy **contents** of **`out/`** into the **repository root** on **`main`** (not a nested `out` folder).
+3. **Settings → Pages** → **Deploy from a branch** → **`main`** / **`/`** (root).
+4. Live at **`https://<username>.github.io/ai-portfolio`**.
+
+### Option C — `gh-pages` branch
+
+```bash
+npm run build
+npx gh-pages -d out
+```
+
+**Settings → Pages** → source **`gh-pages`**, folder **`/`** (root).
+
+### User site only (`username.github.io`)
+
+If the repo is **`username.github.io`** (no `/repo` path), remove the production `basePath` / `assetPrefix` logic from [`next.config.ts`](next.config.ts) and set **`siteUrl`** to `https://username.github.io`.
+
+## Custom domain (optional)
+
+In **Pages** settings, add your domain and follow GitHub’s DNS instructions. Set **`site.siteUrl`** in `lib/site.config.ts` to that domain.
+
+## Scripts
+
+| Command        | Description              |
+|----------------|--------------------------|
+| `npm run dev`  | Local development server |
+| `npm run build`| Static export → `out/`   |
+| `npm run lint` | ESLint                   |
+
+## License
+
+Private / personal use.
