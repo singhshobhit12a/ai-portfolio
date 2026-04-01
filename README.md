@@ -38,17 +38,19 @@ Configured for repo **`ai-portfolio`** → **`https://singhshobhit12a.github.io/
 
 Production builds use `basePath` **`/ai-portfolio`** so assets load correctly under the project URL; **`npm run dev`** still serves at **`http://localhost:3000`**.
 
-### Option A — GitHub Actions (recommended)
+### Option A — GitHub Actions → `gh-pages` branch (recommended)
 
-1. Create an **empty** GitHub repository named **`ai-portfolio`** ([github.com/new](https://github.com/new)): **no** README, **no** `.gitignore`, **no** license (avoids merge conflicts with this project).
-2. Point `git` at your repo and push (this project already sets `origin` to `https://github.com/singhshobhit12a/ai-portfolio.git`; change the URL if needed):
+The workflow [.github/workflows/deploy.yml](.github/workflows/deploy.yml) builds the site and pushes **`out/`** to the **`gh-pages`** branch (via [peaceiris/actions-gh-pages](https://github.com/peaceiris/actions-gh-pages)). You do **not** need “GitHub Actions” as the Pages source.
+
+1. Create an **empty** GitHub repository named **`ai-portfolio`** ([github.com/new](https://github.com/new)): **no** README, **no** `.gitignore`, **no** license.
+2. Push **`main`**:
    ```bash
    git remote -v
    git push -u origin main
    ```
-3. **Settings → Pages** → **Build and deployment** → **Source**: **GitHub Actions** (not “Deploy from a branch” unless you use Option B).
-4. Open the **Actions** tab and wait for **Deploy to GitHub Pages** to finish; approve the **github-pages** environment the first time GitHub asks.
-5. Site: **`https://singhshobhit12a.github.io/ai-portfolio`** (or `https://<your-username>.github.io/ai-portfolio` if the username differs).
+3. **Settings → [Pages](https://github.com/singhshobhit12a/ai-portfolio/settings/pages)** → **Build and deployment** → **Source**: **Deploy from a branch** → Branch **`gh-pages`**, folder **`/ (root)`**.  
+   If **`gh-pages`** is not listed yet, run the workflow once from the **Actions** tab (**Deploy to GitHub Pages** → **Run workflow**), then refresh Pages settings.
+4. Site: **`https://singhshobhit12a.github.io/ai-portfolio`**.
 
 ### Option B — Branch `main`, folder root (manual upload)
 
